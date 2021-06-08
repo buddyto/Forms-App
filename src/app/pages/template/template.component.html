@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-10">
+        <h4>Template <small>Form</small></h4>
+    </div>
+    <div class="col-2">
+        <button class="btn btn-success" routerLink="/reactive" routerLinkActive="router-link-active"  type="button">Go to reactive form</button>
+    </div>
+</div>
+
+<hr>
+<form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
+
+    <div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Name</label>
+            <div class="col-8">
+
+                <input name="nombre" [class.is-invalid]="nombre.invalid && nombre.touched" ngModel #nombre="ngModel" [ngModel]="usuario.nombre"  required minlength="2" class="form-control" type="text" placeholder="Name">
+                <small *ngIf="nombre.invalid && nombre.touched" class="form-text text-danger">2 chars min.</small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Lastname</label>
+            <div class="col-8">
+
+                <input name="apellido" [class.is-invalid]="apellido.invalid && apellido.touched" ngModel #apellido="ngModel" [ngModel]="usuario.apellido" required minlength="2" class="form-control" type="text" placeholder="Lastname">
+                <small *ngIf="apellido.invalid && apellido.touched" class="form-text text-danger">2 chars min.</small>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">E-mail</label>
+        <div class="col-8">
+
+            <input [class.is-invalid]="correo.invalid && correo.touched && correo.dirty" ngModel [ngModel]="usuario.correo" name="correo" required #correo="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control" type="email" placeholder="E-mail">
+            <small *ngIf="correo.invalid && correo.touched" class="form-text text-danger">The e-mail is invalid</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Country</label>
+        <div class="col-8">
+            <select [class.is-invalid]="pais.invalid && pais.touched" #pais="ngModel" class="form-control" name="pais" [ngModel]="usuario.pais" required [disabled]="paises.length === 0">
+                
+                <option *ngFor="let pais of paises" [value]="pais.codigo"> {{pais.nombre}} </option>
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Gender</label>
+        <div class="col-8">
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" [ngModel]="usuario.genero" name="genero" [class.is-invalid]="genero.invalid && genero.touched" required #genero="ngModel" value="M">
+                <label class="form-check-label">Male</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" [ngModel]="usuario.genero" name="genero" [class.is-invalid]="genero.invalid && genero.touched" required #genero="ngModel" value="F">
+                <label class="form-check-label">Female</label>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8">
+            <button type="submit" class="btn btn-outline-primary btn-block">
+        Save
+      </button>
+        </div>
+    </div>
+
+</form>
+
+<hr>
+<pre>
+    Form status: {{forma.valid}}
+    <br>
+    Status: {{forma.status}}
+</pre>
+<br>
+<pre>
+    {{forma.value | json}}
+</pre>

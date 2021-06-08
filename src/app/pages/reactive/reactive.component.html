@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-10">
+        <h4>Reactive <small>Form</small></h4>
+    </div>
+    <div class="col-2">
+        <button class="btn btn-success" routerLink="/template" routerLinkActive="router-link-active"  type="button">Go to template form</button>
+    </div>
+</div>
+
+
+<hr>
+
+<form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardar()">
+
+    <div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Name</label>
+            <div class="col">
+
+                <input class="form-control" type="text" placeholder="Name" formControlName="nombre" [class.is-invalid]="nombreNoValido">
+                <small *ngIf="nombreNoValido" class="text-danger">Invalid name (2 letters min)</small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Lastname</label>
+            <div class="col">
+
+                <input [class.is-invalid]="apellidoNoValido" class="form-control" type="text" placeholder="Lastname" formControlName="apellido">
+                <small *ngIf="apellidoNoValido" class="text-danger">Invalid lastname (2 letters min)</small>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">E-mail</label>
+        <div class="col">
+
+            <input [class.is-invalid]="correoNoValido" class="form-control" type="email" placeholder="E-mail" formControlName="correo">
+            <small *ngIf="correoNoValido" class="text-danger">Invalid e-mail</small>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">User</label>
+        <div class="col">
+
+            <input [class.is-invalid]="usuarioNoValido" class="form-control" type="email" placeholder="Enter your username" formControlName="usuario">
+            <small *ngIf="usuarioNoValido" class="text-danger">Taken username</small>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Password</label>
+        <div class="col">
+
+            <input [class.is-invalid]="pass1NoValido" class="form-control" type="password" placeholder="Password" formControlName="pass1">
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Password again</label>
+        <div class="col">
+
+            <input [class.is-invalid]="pass2NoValido" class="form-control" type="password" placeholder="Password again" formControlName="pass2">
+
+        </div>
+    </div>
+
+
+
+    <div class="form-group row" formGroupName="direccion">
+        <label class="col-2 col-form-label">Address</label>
+        <div class="form-row col">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="State" formControlName="provincia" [class.is-invalid]="provinciaNoValido">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="City" formControlName="ciudad" [class.is-invalid]="ciudadNoValido">
+            </div>
+        </div>
+    </div>
+
+    <div class=" row">
+
+        <div class="col">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Hobbie</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="pasatiempos">
+                    <tr *ngFor="let control of pasatiempos.controls; let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>
+                            <input class="form-control" type="text" [formControlName]="i">
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="borrarPasatiempo(i)" type="button">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary mt-3 mb-5 btn-block" (click)="agregarPasatiempo()" type="button">+ Add</button>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group row">
+        <label class="col-12 col-form-label">&nbsp;</label>
+        <div class="input-group col">
+            <button type="submit" class="btn btn-outline-primary btn-block">
+        Save
+      </button>
+        </div>
+    </div>
+
+</form>
+
+<hr>
+<pre>
+    Form status: {{forma.valid}}
+    <br>
+    Status: {{forma.status}}
+</pre>
+<br>
+<pre>
+    {{forma.value | json}}
+</pre>
